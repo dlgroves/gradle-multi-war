@@ -1,0 +1,32 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'idea'
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+configurations {
+    provided
+    provided.extendsFrom runtime
+}
+
+sourceSets {
+    main {
+        java {
+            compileClasspath = configurations.compile + configurations.provided
+            srcDir 'src/main/java'
+        }
+        resources {
+            srcDir 'src/main/resources'
+        }
+    }
+}
+
+dependencies {
+    compile 'org.slf4j:slf4j-api:1.7.21'
+    provided 'javax.servlet:javax.servlet-api:3.1.0'
+    provided 'javax.servlet.jsp:javax.servlet.jsp-api:2.3.1'
+    provided 'javax.websocket:javax.websocket-api:1.1'
+    provided 'javax.websocket:javax.websocket-client-api:1.1'
+    testCompile 'junit:junit:4.12'
+}

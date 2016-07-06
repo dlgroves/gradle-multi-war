@@ -1,0 +1,44 @@
+apply plugin: 'maven'
+apply plugin: 'java'
+apply plugin: 'war'
+
+allprojects {
+    repositories {
+        jcenter()
+    }
+    group = 'com.groves.douglas'
+    version = '0.1.' + (System.properties['VERSION'] ?: '0-SNAPSHOT')
+}
+
+configurations {
+    servlet25
+    servlet31
+}
+
+dependencies {
+    servlet25 project(path: ':servlet25', configuration: 'runtime')
+    servlet31 project(path: ':servlet31', configuration: 'runtime')
+}
+
+task createWarServlet25(type: War){
+    classpath project.configurations.servlet25
+    classifier = 'servlet25'
+    webXml = file("${project.rootDir}/config/servlet25/web.xml")
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+task createWarServlet31(type: War){
+    classpath project.configurations.servlet31
+    classifier = 'servlet31'
+    webXml = file("${project.rootDir}/config/servlet31/web.xml")
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+assemble.dependsOn = []
+assemble.dependsOn project.tasks.createWarServlet25
+project.tasks.createWarServlet25.finalizedBy project.tasks.createWarServlet31
+
+artifacts {
+    servlet25 war
+    servlet31 war
+}

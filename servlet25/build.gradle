@@ -1,0 +1,9 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+
+dependencies {
+    compile 'org.slf4j:slf4j-api:1.7.21'
+    compile 'javax.servlet:servlet-api:2.5'
+    compile 'javax.servlet.jsp:jsp-api:2.1'
+    testCompile 'junit:junit:4.12'
+}
