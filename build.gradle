@@ -1,6 +1,11 @@
+/**
+ * Gradle build script for a project with multiple WAR archives.
+ * @author Douglas Groves
+ */
 apply plugin: 'maven'
 apply plugin: 'java'
 apply plugin: 'war'
+apply plugin: 'multiwar'
 
 allprojects {
     repositories {
@@ -20,25 +25,14 @@ dependencies {
     servlet31 project(path: ':servlet31', configuration: 'runtime')
 }
 
-task createWarServlet25(type: War){
-    classpath project.configurations.servlet25
-    classifier = 'servlet25'
-    webXml = file("${project.rootDir}/config/servlet25/web.xml")
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-}
-
-task createWarServlet31(type: War){
-    classpath project.configurations.servlet31
-    classifier = 'servlet31'
-    webXml = file("${project.rootDir}/config/servlet31/web.xml")
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-}
-
-assemble.dependsOn = []
-assemble.dependsOn project.tasks.createWarServlet25
-project.tasks.createWarServlet25.finalizedBy project.tasks.createWarServlet31
-
-artifacts {
-    servlet25 war
-    servlet31 war
+multiwar {
+    containers {
+        servlet25 {
+            configuration = project.configurations.servlet25
+        }
+        servlet31 {
+            configuration = project.configurations.servlet31
+        }
+    }
+    verbose = true
 }

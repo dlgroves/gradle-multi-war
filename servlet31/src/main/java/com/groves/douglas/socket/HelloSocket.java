@@ -9,7 +9,7 @@ import javax.websocket.server.ServerEndpoint;
 /**
  * Created by Douglas Groves on 05/07/2016.
  */
-@ServerEndpoint(value = "/foobar")
+@ServerEndpoint(value = "/hello")
 public class HelloSocket {
 
     private static final Logger LOGGER =
@@ -24,7 +24,7 @@ public class HelloSocket {
     @OnMessage
     public String service(String message, Session session) {
         LOGGER.info("Received message [{}] from {}", message, session.getId());
-        return message;
+        return "Hello world!";
     }
 
     @OnClose

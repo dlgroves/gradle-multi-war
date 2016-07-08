@@ -1,9 +1,29 @@
 apply plugin: 'java'
 apply plugin: 'maven'
 
+sourceCompatibility = '1.6'
+targetCompatibility = '1.6'
+
+configurations {
+    provided
+    provided.extendsFrom runtime
+}
+
+sourceSets {
+    main {
+        java {
+            compileClasspath = configurations.compile + configurations.provided
+            srcDir 'src/main/java'
+        }
+        resources {
+            srcDir 'src/main/resources'
+        }
+    }
+}
+
 dependencies {
     compile 'org.slf4j:slf4j-api:1.7.21'
-    compile 'javax.servlet:servlet-api:2.5'
-    compile 'javax.servlet.jsp:jsp-api:2.1'
+    provided 'javax.servlet:servlet-api:2.5'
+    provided 'javax.servlet.jsp:jsp-api:2.1'
     testCompile 'junit:junit:4.12'
 }
