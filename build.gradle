@@ -15,24 +15,10 @@ allprojects {
     version = '0.1.' + (System.properties['VERSION'] ?: '0-SNAPSHOT')
 }
 
-configurations {
-    servlet25
-    servlet31
-}
-
-dependencies {
-    servlet25 project(path: ':servlet25', configuration: 'runtime')
-    servlet31 project(path: ':servlet31', configuration: 'runtime')
-}
-
 multiwar {
-    containers {
-        servlet25 {
-            configuration = project.configurations.servlet25
-        }
-        servlet31 {
-            configuration = project.configurations.servlet31
-        }
+    containers { 
+        servlet25 {} 
+        servlet31 {} 
     }
     verbose = true
 }
