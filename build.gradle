@@ -5,6 +5,16 @@
 apply plugin: 'maven'
 apply plugin: 'java'
 apply plugin: 'war'
+
+buildscript {
+	repositories {
+		mavenLocal()
+	}
+	dependencies {
+		classpath 'com.groves.douglas:multiwar:0.1.0-SNAPSHOT'
+	}
+}
+
 apply plugin: 'multiwar'
 
 allprojects {
